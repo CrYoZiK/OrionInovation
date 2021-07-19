@@ -1,18 +1,5 @@
-#include <Arduino.h>
-#include <DHT.h>
-#include <DHT_U.h>
+#include "myfunc.h"
 
-#include <ESP8266WiFi.h>
-#include <WiFiClient.h>
-#include <ESP8266WiFiAP.h>
-#include <WiFiUdp.h>
-
-struct ESPlist {
-    char udppacket[255];
-    char ip_adres[15];
-    int chek_life;
-    ESPlist* next;
-};
 
 ESPlist* newESPList(char packet[], char adres[], int time)
 {
@@ -36,4 +23,3 @@ void changeESPlistPlace(ESPlist* tempESP,ESPlist* HeadESPlist, ESPlist* preview)
     tempESP->next = temp;
     HeadESPlist = tempESP;
 }
-
