@@ -53,16 +53,20 @@ void loop()
     Serial.println(replyPacekt);
     BLEesp.println(replyPacekt);
 
+    if (WiFi.status() == WL_CONNECTED) {
     Udp.beginPacket(IPadress, localUdpPort);
     Udp.printf(replyPacekt);
     Udp.endPacket();
+    } else {
+      setup();
+    }
 
     delay(1000);
     int packetSize = Udp.parsePacket();
     
     if (packetSize > 0)
     {
-      Serial.println("Есть ответ");
+      Serial.print("Есть ответный пакет :");
       int len = Udp.read(incomingPacket, 255);
       if (len > 0)
       {
