@@ -2,7 +2,6 @@
 ESPlist* HeadESPlist = NULL;
 
 inline void handleClient(WiFiClient& client, ESPlist* list);
-inline bool respToClient(WiFiClient& client, String& currentLine);
 
 const char* ssid = "esp8266";
 const char* password = "12345611";
@@ -58,7 +57,7 @@ void loop()
     }
 
     ESPlist* tempESP = HeadESPlist;
-    ESPlist* preview = NULL;
+    ESPlist* previous = NULL;
 
     while (tempESP != NULL && HeadESPlist != NULL) {
 
@@ -71,7 +70,7 @@ void loop()
         updatePacketESPlist(tempESP, incomingPacket, time);
 
         if (tempESP != HeadESPlist) {
-        preview->next = tempESP->next;
+        previous->next = tempESP->next;
         tempESP->next = HeadESPlist;
         HeadESPlist = tempESP;
         }
@@ -85,7 +84,7 @@ void loop()
         HeadESPlist->next = head;
         break;
       } else {
-        preview = tempESP;
+        previous = tempESP;
         tempESP = tempESP->next;
       }
     }
