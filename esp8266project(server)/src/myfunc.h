@@ -20,5 +20,4 @@ ESPlist* newESPList(char packet[], char adres[], int time);
 
 void updatePacketESPlist(ESPlist* temp, char packet[], int time);
 
-void changeESPlistPlace(ESPlist* tempESP,ESPlist* HeadESPlist, ESPlist* preview);
 #endif
