@@ -59,12 +59,12 @@ void loop()
     ESPlist* tempESP = HeadESPlist;
     ESPlist* previous = NULL;
 
-    while (tempESP != NULL && HeadESPlist != NULL) {
+    while (tempESP != NULL) {
 
-      String adres = ip_adres;
-      String adresFromStruct = tempESP->ip_adres;
+      String adresTemp = ip_adres; //из пакета
+      String adresFromStruct = tempESP->ip_adres; //из текущего элемента
 
-      if (adres == adresFromStruct) {
+      if (adresTemp == adresFromStruct) {
 
         int time = millis() / 1000;
         updatePacketESPlist(tempESP, incomingPacket, time);
@@ -93,8 +93,8 @@ void loop()
       int i = 0;
       while(tempESP != NULL) {
       Serial.print("Элемент № "); Serial.println(i);
-      Serial.print("Адрес первого элемента списка = "); Serial.println(tempESP->ip_adres);
-      Serial.print("Пакет первого элемента списка = "); Serial.println(tempESP->udppacket);
+      Serial.print("Адрес элемента списка = "); Serial.println(tempESP->ip_adres);
+      Serial.print("Пакет элемента списка = "); Serial.println(tempESP->udppacket);
       int time = ((millis()/1000) - tempESP->chek_life);
       Serial.print("Времени с последнего пакета = "); Serial.println(time);
       i++;
@@ -118,14 +118,14 @@ inline void handleClient(WiFiClient& client, ESPlist* list)
       client.print("<html><meta charset=\"UTF-8\"><body>");
       
       while (list != NULL) {
-        client.print("<h1>");
-        client.print(list->udppacket);
-        client.print("<br>");
+        client.print("<div style = 'background: gray;'><h1>");
         client.print(list->ip_adres);
         client.print("<br>");
-        client.print("Времени с последней записи : ");
+        client.print(list->udppacket);
+        client.print("<br>");
+        client.print("Последний пакет : ");
         client.print(((millis()/1000) - list->chek_life));
-        client.print("</h1>");
+        client.print(" секунд назад</h1></div>");
         list = list->next;
       }
       client.print("</body></html>");
