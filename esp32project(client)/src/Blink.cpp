@@ -48,7 +48,7 @@ void loop()
 {
     int t = dht.readTemperature();
     int h = dht.readHumidity();
-    String reply = "Температура = "+  String(t) +  "*C; Влажность = " + String(h) + " процента";
+    String reply = "Температура = "+  String(t) +  " °C; Влажность = " + String(h) + ";";
     strcpy(replyPacekt, reply.c_str());
     Serial.println(replyPacekt);
     BLEesp.println(replyPacekt);
